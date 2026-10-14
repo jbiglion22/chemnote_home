@@ -1,0 +1,402 @@
+<title>ChemNote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* Layout: lab-notebook page on faint graph paper; hero pairs a periodic-table tile + pitch with a phone, then feature entries with margin labels. */
+:root {
+  --paper: #f3f6f7;
+  --grid: #dfe7ea;
+  --ink: #17303a;
+  --ink-soft: #4d6670;
+  --line: #c5d3d8;
+  --surface: #ffffff;
+  --accent: #c2186b;          /* phenolphthalein pink */
+  --accent-soft: #fbe4ef;
+  --on-accent: #ffffff;
+  --teal: #1f6f7d;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f1a1f; --grid: #17252b; --ink: #e2ecef; --ink-soft: #94aab2;
+    --line: #2a3d45; --surface: #15242a; --accent: #f064a6; --accent-soft: #3a1828;
+    --on-accent: #1a0710; --teal: #6cc3d1; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f1a1f; --grid: #17252b; --ink: #e2ecef; --ink-soft: #94aab2;
+  --line: #2a3d45; --surface: #15242a; --accent: #f064a6; --accent-soft: #3a1828;
+  --on-accent: #1a0710; --teal: #6cc3d1; color-scheme: dark;
+}
+
+body {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+}
+.wrap { max-width: 980px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 72px; display: grid; gap: 72px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; line-height: 1.3; }
+h2 { font-size: 1.6rem; font-weight: 700; }
+h3 { font-size: 1.05rem; font-weight: 700; }
+p { margin: 0; max-width: 62ch; }
+.mono { font-family: var(--font-mono); }
+.label { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+sub { font-size: .72em; line-height: 0; }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; align-items: center; }
+@media (max-width: 760px) { .hero { grid-template-columns: 1fr; } }
+.hero-text { display: grid; gap: 20px; min-width: 0; }
+.brand { display: flex; gap: 14px; align-items: center; }
+.tile {
+  width: 64px; height: 64px; border: 2px solid var(--ink); background: var(--surface);
+  display: grid; place-items: center; position: relative; font-family: var(--font-mono);
+  font-size: 1.6rem; font-weight: 500;
+}
+.tile span { color: var(--accent); }
+.tile small { position: absolute; top: 2px; left: 5px; font-size: .55rem; font-weight: 400; }
+.brand-name { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 500; }
+.hero h1 { font-size: clamp(2.1rem, 5.4vw, 3.2rem); font-weight: 700; letter-spacing: -.01em; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero .lede { font-size: 1.1rem; color: var(--ink-soft); }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn { font-family: var(--font-body); font-weight: 700; font-size: .95rem; padding: 11px 20px; text-decoration: none;
+  background: var(--accent); color: var(--on-accent); border: 2px solid var(--accent); }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
+.btn:focus-visible, .chip:focus-visible, .demo input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.meta { font-family: var(--font-mono); font-size: .8rem; color: var(--ink-soft); }
+
+/* Phone mockups */
+.phone { border: 2px solid var(--ink); background: var(--surface); border-radius: 26px; padding: 14px 12px 10px;
+  display: grid; gap: 10px; grid-template-rows: auto 1fr auto; aspect-ratio: 9 / 18; width: 100%; max-width: 280px; justify-self: center; }
+.phone .bar { font-family: var(--font-mono); font-size: .75rem; color: var(--ink-soft); display: flex; justify-content: space-between; padding-inline: 4px; }
+.phone .scr { display: grid; gap: 8px; align-content: start; font-size: .85rem; min-width: 0; }
+.phone .nav { display: flex; justify-content: space-around; font-size: .68rem; color: var(--ink-soft); border-top: 1px solid var(--line); padding-top: 8px; }
+.phone .nav .cur { color: var(--accent); font-weight: 700; }
+.note { border: 1px solid var(--line); padding: 8px 10px; display: grid; gap: 2px; }
+.note b { font-size: .88rem; }
+.note span { font-size: .76rem; color: var(--ink-soft); }
+.note .tag { font-family: var(--font-mono); font-size: .66rem; color: var(--teal); }
+.calc-card { background: var(--accent-soft); border: 1px solid var(--accent); padding: 10px; display: grid; gap: 2px; }
+.calc-card .f { font-family: var(--font-mono); font-size: 1.1rem; }
+.calc-card .m { font-family: var(--font-mono); font-size: 1.25rem; color: var(--accent); font-weight: 500; }
+
+/* Feature entries */
+.entry { display: grid; grid-template-columns: 150px 1fr; gap: 28px; border-top: 1px solid var(--line); padding-top: 22px; }
+.entry > .label { padding-top: 7px; }
+.entry-body { display: grid; gap: 22px; min-width: 0; }
+@media (max-width: 680px) { .entry { grid-template-columns: 1fr; gap: 10px; } }
+
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.feature { background: var(--surface); padding: 20px; display: grid; gap: 8px; align-content: start; }
+.feature .sample { font-family: var(--font-mono); font-size: .88rem; color: var(--teal); }
+.feature p { font-size: .94rem; color: var(--ink-soft); }
+
+/* Demo */
+.demo { background: var(--surface); border: 2px solid var(--ink); padding: 22px; display: grid; gap: 16px; }
+.demo-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.demo input {
+  font-family: var(--font-mono); font-size: 1.15rem; padding: 9px 12px; flex: 1 1 200px; min-width: 0;
+  border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+}
+.chip { font-family: var(--font-mono); font-size: .85rem; padding: 4px 10px; border: 1px solid var(--line);
+  background: transparent; color: var(--ink); cursor: pointer; }
+.chip:hover { border-color: var(--teal); color: var(--teal); }
+.result { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: baseline; }
+.result .formula { font-family: var(--font-mono); font-size: 1.7rem; }
+.result .mass { font-family: var(--font-mono); font-size: 1.7rem; color: var(--accent); font-variant-numeric: tabular-nums; }
+.result .err { color: var(--accent); font-size: .95rem; }
+.bars { display: grid; gap: 6px; }
+.bar-row { display: grid; grid-template-columns: 34px 1fr 120px; gap: 10px; align-items: center; font-family: var(--font-mono); font-size: .82rem; font-variant-numeric: tabular-nums; }
+.bar-track { height: 10px; background: var(--grid); }
+.bar-fill { height: 100%; background: var(--teal); }
+.bar-row .v { text-align: right; color: var(--ink-soft); }
+
+/* Screens */
+.screens { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+.screens .phone { max-width: 230px; }
+.screen-cap { display: grid; gap: 2px; margin-top: 12px; text-align: center; }
+.screen-cap p { font-size: .88rem; color: var(--ink-soft); max-width: none; }
+.pt { display: grid; grid-template-columns: repeat(18, 1fr); gap: 1.5px; }
+.pt i { aspect-ratio: 1; background: var(--grid); }
+.pt i.x { background: transparent; }
+.pt i.on { background: var(--accent); }
+.el { border: 1px solid var(--line); padding: 8px; display: grid; gap: 2px; font-size: .78rem; }
+.el .s { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 500; }
+.eq { font-family: var(--font-mono); font-size: .85rem; border: 1px solid var(--line); padding: 8px; }
+.eq .k { color: var(--accent); font-weight: 500; }
+.lab-row { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; font-size: .78rem; }
+.lab-row dt { color: var(--ink-soft); }
+.lab-row dd { margin: 0; font-family: var(--font-mono); }
+.photo { aspect-ratio: 4 / 3; background: repeating-linear-gradient(45deg, var(--grid) 0 6px, transparent 6px 12px); border: 1px solid var(--line); }
+
+/* Specs */
+.specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.spec { display: grid; gap: 4px; }
+.spec .v { font-family: var(--font-mono); font-size: 1.3rem; font-weight: 500; }
+.spec p { font-size: .9rem; color: var(--ink-soft); }
+
+footer { font-size: .85rem; color: var(--ink-soft); border-top: 1px solid var(--line); padding-top: 16px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+@media (prefers-reduced-motion: no-preference) {
+  .chip, .btn { transition: border-color .15s, color .15s, transform .15s; }
+  .btn:hover { transform: translateY(-1px); }
+  .bar-fill { transition: width .3s ease; }
+}
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-text">
+      <div class="brand">
+        <div class="tile" aria-hidden="true"><small>1</small>C<span>n</span></div>
+        <span class="brand-name">ChemNote</span>
+      </div>
+      <h1>화학식이 <em>제대로 보이는</em> 화학 노트</h1>
+      <p class="lede">H2SO4를 치면 H<sub>2</sub>SO<sub>4</sub>로 바로 바뀝니다. 노트를 쓰다가 주기율표를 열고, 몰 질량을 계산하고, 실험 결과를 남기는 일을 앱 하나에서 끝낼 수 있습니다.</p>
+      <div class="cta">
+        <a class="btn" href="#demo">계산기 써보기</a>
+        <a class="btn ghost" href="#features">기능 둘러보기</a>
+      </div>
+      <span class="meta">Android 7.0 이상 · 무료 · 오프라인 사용 가능</span>
+    </div>
+
+    <div class="phone" aria-label="ChemNote 노트 화면 예시">
+      <div class="bar"><span>노트</span><span>＋</span></div>
+      <div class="scr">
+        <div class="calc-card"><span class="label">몰 질량</span><span class="f">H<sub>2</sub>SO<sub>4</sub></span><span class="m">98.07 g/mol</span></div>
+        <div class="note"><span class="tag">#산과염기</span><b>황산의 성질</b><span>H<sub>2</sub>SO<sub>4</sub> → 2H<sup>+</sup> + SO<sub>4</sub><sup>2−</sup></span></div>
+        <div class="note"><span class="tag">#산화환원</span><b>산화수 구하는 법</b><span>KMnO<sub>4</sub>에서 Mn은 +7</span></div>
+        <div class="note"><span class="tag">#실험</span><b>중화 적정 결과</b><span>NaOH 0.1 M · 24.6 mL</span></div>
+      </div>
+      <div class="nav"><span class="cur">노트</span><span>주기율표</span><span>계산</span><span>실험</span></div>
+    </div>
+  </header>
+
+  <section class="entry" id="features">
+    <div class="label">기능</div>
+    <div class="entry-body">
+      <h2>화학 공부에 필요한 도구를 한곳에</h2>
+      <div class="features">
+        <div class="feature">
+          <h3>화학식 자동 서식</h3>
+          <span class="sample">Fe2(SO4)3 → Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub></span>
+          <p>숫자는 아래첨자로, 이온 전하는 위첨자로 자동 변환됩니다. 서식 버튼을 찾을 필요가 없습니다.</p>
+        </div>
+        <div class="feature">
+          <h3>주기율표</h3>
+          <span class="sample">Fe · 26번 · 55.845 u</span>
+          <p>118개 원소의 원자량, 전자 배치, 전기음성도를 확인하고 한 번 탭해서 노트에 넣을 수 있습니다.</p>
+        </div>
+        <div class="feature">
+          <h3>몰 질량 계산기</h3>
+          <span class="sample">Ca(OH)<sub>2</sub> = 74.09 g/mol</span>
+          <p>괄호가 들어간 식도 계산합니다. 원소별 질량 백분율까지 함께 보여줍니다.</p>
+        </div>
+        <div class="feature">
+          <h3>반응식 계수 맞추기</h3>
+          <span class="sample">C<sub>3</sub>H<sub>8</sub> + 5O<sub>2</sub> → 3CO<sub>2</sub> + 4H<sub>2</sub>O</span>
+          <p>반응물과 생성물만 입력하면 가장 작은 정수 계수를 찾아줍니다.</p>
+        </div>
+        <div class="feature">
+          <h3>실험 기록</h3>
+          <span class="sample">목적 · 시약 · 측정값 · 사진</span>
+          <p>정해진 양식대로 실험을 기록하고 사진을 붙입니다. 보고서를 쓸 때 그대로 꺼내 쓰면 됩니다.</p>
+        </div>
+        <div class="feature">
+          <h3>태그와 검색</h3>
+          <span class="sample">"KMnO4" → 노트 4개</span>
+          <p>본문과 화학식을 함께 검색합니다. 단원별 태그로 시험 범위만 골라 볼 수 있습니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry" id="demo">
+    <div class="label">써보기</div>
+    <div class="entry-body">
+      <h2>몰 질량 계산기</h2>
+      <p>앱에 들어 있는 계산기를 여기서도 써볼 수 있습니다. 화학식을 입력하거나 예시를 눌러 보세요.</p>
+      <div class="demo">
+        <div class="demo-row">
+          <label class="label" for="formula">화학식</label>
+          <input id="formula" type="text" value="H2SO4" autocomplete="off" spellcheck="false" aria-describedby="result">
+        </div>
+        <div class="demo-row" aria-label="예시 화학식">
+          <button class="chip" type="button" data-f="H2O">H2O</button>
+          <button class="chip" type="button" data-f="NaCl">NaCl</button>
+          <button class="chip" type="button" data-f="Ca(OH)2">Ca(OH)2</button>
+          <button class="chip" type="button" data-f="C6H12O6">C6H12O6</button>
+          <button class="chip" type="button" data-f="Fe2(SO4)3">Fe2(SO4)3</button>
+        </div>
+        <div id="result" class="result" aria-live="polite"></div>
+        <div id="bars" class="bars"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="label">화면</div>
+    <div class="entry-body">
+      <h2>하단 탭 네 개로 바로 이동</h2>
+      <div class="screens">
+        <div>
+          <div class="phone" aria-hidden="true">
+            <div class="bar"><span>주기율표</span><span>⌕</span></div>
+            <div class="scr">
+              <div class="pt" id="pt"></div>
+              <div class="el"><span class="label">26 · 8족 · 4주기</span><span class="s">Fe</span><span>철 · 55.845 u</span><span class="mono">[Ar] 3d⁶ 4s²</span></div>
+            </div>
+            <div class="nav"><span>노트</span><span class="cur">주기율표</span><span>계산</span><span>실험</span></div>
+          </div>
+          <div class="screen-cap"><h3>주기율표</h3><p>원소를 누르면 상세 정보가 열립니다</p></div>
+        </div>
+        <div>
+          <div class="phone" aria-hidden="true">
+            <div class="bar"><span>계산</span><span></span></div>
+            <div class="scr">
+              <span class="label">반응식</span>
+              <div class="eq">C<sub>3</sub>H<sub>8</sub> + O<sub>2</sub> → CO<sub>2</sub> + H<sub>2</sub>O</div>
+              <span class="label">결과</span>
+              <div class="eq">C<sub>3</sub>H<sub>8</sub> + <span class="k">5</span>O<sub>2</sub> → <span class="k">3</span>CO<sub>2</sub> + <span class="k">4</span>H<sub>2</sub>O</div>
+            </div>
+            <div class="nav"><span>노트</span><span>주기율표</span><span class="cur">계산</span><span>실험</span></div>
+          </div>
+          <div class="screen-cap"><h3>계산기</h3><p>몰 질량과 반응식 계수 맞추기</p></div>
+        </div>
+        <div>
+          <div class="phone" aria-hidden="true">
+            <div class="bar"><span>실험</span><span>＋</span></div>
+            <div class="scr">
+              <b>중화 적정</b>
+              <dl class="lab-row">
+                <dt>날짜</dt><dd>2026-10-13</dd>
+                <dt>시약</dt><dd>HCl, NaOH 0.1 M</dd>
+                <dt>지시약</dt><dd>페놀프탈레인</dd>
+                <dt>적정량</dt><dd>24.6 mL</dd>
+              </dl>
+              <div class="photo"></div>
+            </div>
+            <div class="nav"><span>노트</span><span>주기율표</span><span>계산</span><span class="cur">실험</span></div>
+          </div>
+          <div class="screen-cap"><h3>실험 기록</h3><p>측정값과 사진을 함께 저장합니다</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="label">사양</div>
+    <div class="entry-body">
+      <div class="specs">
+        <div class="spec"><span class="label">원소 데이터</span><span class="v">118종</span><p>IUPAC 표준 원자량 기준</p></div>
+        <div class="spec"><span class="label">지원 기기</span><span class="v">Android 7.0+</span><p>휴대폰과 태블릿, 다크 모드 지원</p></div>
+        <div class="spec"><span class="label">저장</span><span class="v">기기 내부</span><p>인터넷 없이 모든 기능 사용 가능</p></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  var MASS = {H:1.008,He:4.0026,Li:6.94,Be:9.0122,B:10.81,C:12.011,N:14.007,O:15.999,F:18.998,Ne:20.180,
+    Na:22.990,Mg:24.305,Al:26.982,Si:28.085,P:30.974,S:32.06,Cl:35.45,Ar:39.948,K:39.098,Ca:40.078,
+    Sc:44.956,Ti:47.867,V:50.942,Cr:51.996,Mn:54.938,Fe:55.845,Co:58.933,Ni:58.693,Cu:63.546,Zn:65.38,
+    Ga:69.723,Ge:72.630,As:74.922,Se:78.971,Br:79.904,Kr:83.798,Rb:85.468,Sr:87.62,Ag:107.87,Sn:118.71,
+    I:126.90,Xe:131.29,Cs:132.91,Ba:137.33,Pt:195.08,Au:196.97,Hg:200.59,Pb:207.2,U:238.03};
+
+  function parse(s) {
+    var i = 0;
+    function num() { var m = /^\d+/.exec(s.slice(i)); if (!m) return 1; i += m[0].length; return parseInt(m[0], 10); }
+    function group() {
+      var counts = {};
+      while (i < s.length && s[i] !== ")") {
+        var part;
+        if (s[i] === "(") {
+          i++; part = group();
+          if (s[i] !== ")") throw new Error("닫는 괄호가 없습니다.");
+          i++;
+        } else {
+          var m = /^[A-Z][a-z]?/.exec(s.slice(i));
+          if (!m) throw new Error("'" + s[i] + "'를 원소 기호로 읽을 수 없습니다. 원소 기호의 첫 글자는 대문자로 써 주세요.");
+          if (!(m[0] in MASS)) throw new Error(m[0] + "는 웹 미리보기에서 지원하지 않는 기호입니다.");
+          i += m[0].length; part = {}; part[m[0]] = 1;
+        }
+        var n = num();
+        for (var k in part) counts[k] = (counts[k] || 0) + part[k] * n;
+      }
+      return counts;
+    }
+    var c = group();
+    if (i < s.length) throw new Error("여는 괄호 없이 닫는 괄호가 있습니다.");
+    return c;
+  }
+
+  function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+  function pretty(s) { return esc(s).replace(/(\d+)/g, "<sub>$1</sub>"); }
+
+  var input = document.getElementById("formula");
+  var out = document.getElementById("result");
+  var bars = document.getElementById("bars");
+
+  function render() {
+    var s = input.value.replace(/\s+/g, "");
+    bars.innerHTML = "";
+    if (!s) { out.innerHTML = '<span class="err">화학식을 입력하세요. 예: H2O</span>'; return; }
+    try {
+      var c = parse(s), total = 0, k;
+      for (k in c) total += MASS[k] * c[k];
+      out.innerHTML = '<span class="formula">' + pretty(s) + '</span><span class="mass">' + total.toFixed(2) + ' g/mol</span>';
+      var html = "";
+      for (k in c) {
+        var pct = MASS[k] * c[k] / total * 100;
+        html += '<div class="bar-row"><span>' + k + '</span><div class="bar-track"><div class="bar-fill" style="width:' + pct.toFixed(1) + '%"></div></div><span class="v">×' + c[k] + ' · ' + pct.toFixed(1) + '%</span></div>';
+      }
+      bars.innerHTML = html;
+    } catch (e) {
+      out.innerHTML = '<span class="err">' + esc(e.message) + '</span>';
+    }
+  }
+
+  input.addEventListener("input", render);
+  document.querySelectorAll(".chip").forEach(function (b) {
+    b.addEventListener("click", function () { input.value = b.getAttribute("data-f"); render(); input.focus(); });
+  });
+  render();
+
+  // Mini periodic table (periods 1-7, main block only), Fe highlighted
+  var layout = [
+    "H................He",
+    "LiBe..........BCNOFNe",
+    "NaMg..........AlSiPSClAr",
+    "KCaScTiVCrMnFeCoNiCuZnGaGeAsSeBrKr",
+    "x".repeat(18), "x".repeat(18), "x".repeat(18)
+  ];
+  var rows = [
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1],
+    [1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+  ];
+  var pt = document.getElementById("pt"), h = "";
+  rows.forEach(function (r, ri) {
+    r.forEach(function (v, ci) {
+      var cls = v ? (ri === 3 && ci === 7 ? "on" : "") : "x";
+      h += '<i class="' + cls + '"></i>';
+    });
+  });
+  pt.innerHTML = h;
+})();
+</script>
