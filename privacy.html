@@ -1,89 +1,263 @@
-<!DOCTYPE html>
-<html lang="ko">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>개인정보처리방침</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 40px;
-            max-width: 900px;
-        }
-        h1, h2 {
-            color: #333333;
-        }
-        hr {
-            margin: 30px 0;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Privacy Policy · Chemistry Note</title>
+<script>
+/* ============================================================
+   설정 / Settings — 이메일은 여기서 한 번만 바꾸면 모든 언어에 들어갑니다.
+   Change the email here once; it is used in every language.
+   ============================================================ */
+var CONFIG = {
+  email: "jbiglion22@gmail.com",
+  effectiveDate: "2026-10-30"
+};
+</script>
+<style>
+:root {
+  --bg: #F3F5F4; --surface: #FFFFFF; --ink: #15201D; --muted: #55625E; --line: #DCE2DF; --teal: #0E6E62; --teal-soft: #DDEFEB;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0F1513; --surface: #18201D; --ink: #E8EEEB; --muted: #9AA8A3; --line: #2A3430; --teal: #4FD1BC; --teal-soft: #163A34; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.7; }
+html:lang(ko) body { word-break: keep-all; overflow-wrap: anywhere; }
+.wrap { max-width: 760px; margin: 0 auto; padding-inline: 20px; }
+header { border-bottom: 1px solid var(--line); background: var(--surface); }
+header .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; min-height: 60px; padding-block: 10px; }
+.app { font-weight: 700; white-space: nowrap; }
+.langs { margin-left: auto; display: flex; flex-wrap: wrap; gap: 4px; }
+.langs button { border: 1px solid var(--line); background: var(--surface); color: var(--muted); font: inherit; font-size: 0.85rem; font-weight: 600; padding: 5px 12px; border-radius: 999px; cursor: pointer; min-height: 34px; white-space: nowrap; }
+.langs button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+main { padding-block: 32px 56px; }
+h1 { font-size: clamp(1.7rem, 4.5vw, 2.2rem); line-height: 1.25; margin: 0 0 6px; }
+.meta { color: var(--muted); font-size: 0.92rem; margin: 0 0 18px; }
+.contact { background: var(--teal-soft); border-radius: 12px; padding: 12px 16px; margin: 0 0 28px; font-size: 0.95rem; }
+h2 { font-size: 1.15rem; margin: 30px 0 8px; line-height: 1.35; }
+p { margin: 0 0 10px; }
+ul { margin: 0 0 10px; padding-left: 1.2em; }
+li { margin: 3px 0; }
+a { color: var(--teal); overflow-wrap: anywhere; }
+footer { border-top: 1px solid var(--line); padding-block: 20px 36px; color: var(--muted); font-size: 0.85rem; }
+</style>
 </head>
 <body>
 
-<h1>개인정보처리방침</h1>
+<header>
+  <div class="wrap">
+    <span class="app" id="app-name">Chemistry Note</span>
+    <div class="langs" id="langs" role="group" aria-label="Language"></div>
+  </div>
+</header>
 
-<p>본 애플리케이션(이하 "앱")은 사용자의 개인정보를 중요하게 생각하며, 관련 법령을 준수합니다.</p>
+<main class="wrap" id="content">
+  <noscript><p>This page needs JavaScript to show the privacy policy.</p></noscript>
+</main>
 
-<hr>
+<footer>
+  <div class="wrap" id="footer"></div>
+</footer>
 
-<h2>1. 수집하는 정보</h2>
-<p>본 앱은 직접적으로 사용자의 이름, 이메일, 전화번호 등의 개인정보를 수집하지 않습니다.</p>
-<p>다만, 광고 서비스 이용 과정에서 일부 정보가 자동 수집될 수 있습니다.</p>
+<script>
+/*
+ * 언어 추가 방법 / How to add a language:
+ *   TEXT에 "en" 블록을 복사해서 새 언어 코드(예: "ja")로 붙여 넣고 번역하면 됩니다.
+ *   Copy the "en" block in TEXT, paste it under a new language code (e.g. "ja") and translate it.
+ *   언어 버튼과 자동 선택은 TEXT에 있는 언어로 저절로 만들어집니다.
+ * 문장 안의 {email}, {date}, {app}은 위 CONFIG 값으로 바뀝니다.
+ */
+var TEXT = {
+  en: {
+    languageName: "English",
+    app: "Chemistry Note",
+    title: "Privacy Policy",
+    effective: "Effective date: {date}",
+    contactLine: "Questions about this policy: {email}",
+    sections: [
+      { h: "1. About this policy", p: [
+        "This Privacy Policy explains how {app} (\"the app\") handles information when you use it. The app is a chemistry reference and calculator: a periodic table, ions and formulas, reactions, a calculator, molecule models, data tables and search."
+      ]},
+      { h: "2. Information we do not collect", p: [
+        "The app has no sign-up or account. We do not ask for your name, email address, phone number or other personal details, and we do not have a server that receives your data.",
+        "The app does not use your camera, microphone, photos, contacts or location permission."
+      ]},
+      { h: "3. Information stored on your device", p: [
+        "To make the app easier to use, it keeps the following on your device only:"
+      ], li: [
+        "Settings such as language and light or dark theme",
+        "Whether you have already seen the introduction",
+        "Recently viewed elements, and recently used formulas, reactions and molecules"
+      ], after: [
+        "This information is not sent to us. If Android backup is turned on, Android may include it in your device backup under Google's terms. You can delete it at any time by clearing the app's storage or uninstalling the app."
+      ]},
+      { h: "4. Advertising (Google AdMob)", p: [
+        "The app shows ads through Google AdMob, a service of Google LLC. To show and measure ads, limit how often you see the same ad and prevent fraud, Google may collect and process information such as:"
+      ], li: [
+        "Your device's advertising ID",
+        "IP address, and an approximate location estimated from it",
+        "Device and app information, such as device model, operating system version and language",
+        "How you interact with ads"
+      ], after: [
+        "Whether ads are personalized depends on your consent and your device settings. Ad content in the app is limited to content suitable for general audiences.",
+        "Learn more in Google's privacy policy (<a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\">policies.google.com/privacy</a>) and in how Google uses information from apps that use its services (<a href=\"https://policies.google.com/technologies/partner-sites\" target=\"_blank\" rel=\"noopener\">policies.google.com/technologies/partner-sites</a>)."
+      ]},
+      { h: "5. Consent in the EEA, the UK and Switzerland", p: [
+        "If you are in a region where consent is required, the app shows Google's consent form before ads are requested. You can change your choice at any time in the app under Settings > Privacy choices."
+      ]},
+      { h: "6. Your choices", li: [
+        "Reset or delete your advertising ID, or opt out of ads personalization, in your device settings (for example Settings > Google > Ads, or Settings > Privacy > Ads).",
+        "Change your consent in Settings > Privacy choices (shown where consent is required).",
+        "Delete the data stored by the app by clearing its storage or uninstalling it."
+      ]},
+      { h: "7. Permissions", p: [
+        "The app uses internet and network state permissions to load ads, and the advertising ID permission that comes with the Google Mobile Ads SDK. It does not request permissions that give access to your personal content."
+      ]},
+      { h: "8. Sharing of information", p: [
+        "We do not sell, rent or share your personal information. Information is processed by third parties only as described in section 4."
+      ]},
+      { h: "9. Children", p: [
+        "The app is a general chemistry reference and is not directed specifically at children under 13. We do not knowingly collect personal information from children. If you believe a child has provided personal information, please contact us at {email}."
+      ]},
+      { h: "10. Security", p: [
+        "Information stored by the app stays on your device. Communication between the app and Google's advertising services uses encrypted connections (HTTPS)."
+      ]},
+      { h: "11. Changes to this policy", p: [
+        "We may update this policy when the app changes. The updated policy will be posted on this page with a new effective date."
+      ]},
+      { h: "12. Contact", p: [
+        "If you have questions or requests about this policy, contact us at {email}."
+      ]}
+    ],
+    footer: "© {app}"
+  },
 
-<h2>2. 광고 서비스 이용</h2>
-<p>본 앱은 광고 제공을 위해 Google AdMob을 사용합니다.</p>
-<p>Google AdMob은 다음과 같은 정보를 수집할 수 있습니다:</p>
-<ul>
-    <li>광고 식별자 (Advertising ID)</li>
-    <li>기기 정보 (기기 모델, 운영체제 버전 등)</li>
-    <li>IP 주소</li>
-    <li>앱 사용 정보</li>
-</ul>
+  ko: {
+    languageName: "한국어",
+    app: "화학노트",
+    title: "개인정보처리방침",
+    effective: "시행일: {date}",
+    contactLine: "이 방침에 대한 문의: {email}",
+    sections: [
+      { h: "1. 이 방침에 대하여", p: [
+        "이 개인정보처리방침은 {app}(이하 \"앱\")을 사용할 때 정보가 어떻게 처리되는지 설명합니다. 앱은 화학 참고서·계산기 앱으로, 주기율표, 이온·화학식, 화학 반응, 계산기, 분자 모형, 자료표, 검색 기능을 제공합니다."
+      ]},
+      { h: "2. 수집하지 않는 정보", p: [
+        "앱에는 회원 가입이나 계정이 없습니다. 이름, 이메일 주소, 전화번호 등 개인 정보를 요청하지 않으며, 사용자의 정보를 받는 서버를 운영하지 않습니다.",
+        "앱은 카메라, 마이크, 사진, 연락처, 위치 권한을 사용하지 않습니다."
+      ]},
+      { h: "3. 기기에 저장되는 정보", p: [
+        "앱을 편리하게 쓰도록 다음 정보를 사용자의 기기에만 저장합니다."
+      ], li: [
+        "언어, 라이트·다크 화면 모드 같은 설정",
+        "앱 소개를 이미 봤는지 여부",
+        "최근 본 원소, 최근 사용한 화학식·반응식·분자"
+      ], after: [
+        "이 정보는 개발자에게 전송되지 않습니다. Android 백업이 켜져 있으면 Google 약관에 따라 기기 백업에 포함될 수 있습니다. 앱 저장공간을 지우거나 앱을 삭제하면 언제든 지울 수 있습니다."
+      ]},
+      { h: "4. 광고 (Google AdMob)", p: [
+        "앱은 Google LLC의 Google AdMob을 통해 광고를 보여 줍니다. 광고를 보여 주고 성과를 측정하며, 같은 광고가 너무 자주 나오지 않게 하고 부정 행위를 막기 위해 Google은 다음과 같은 정보를 수집·처리할 수 있습니다."
+      ], li: [
+        "기기의 광고 ID",
+        "IP 주소와 이를 바탕으로 추정한 대략적인 위치",
+        "기기 모델, 운영체제 버전, 언어 등 기기·앱 정보",
+        "광고와의 상호작용"
+      ], after: [
+        "맞춤 광고 여부는 사용자의 동의와 기기 설정에 따라 정해집니다. 앱의 광고 콘텐츠는 전체 이용가 수준으로 제한되어 있습니다.",
+        "자세한 내용은 Google 개인정보처리방침(<a href=\"https://policies.google.com/privacy?hl=ko\" target=\"_blank\" rel=\"noopener\">policies.google.com/privacy</a>)과 Google 서비스를 사용하는 앱의 정보 사용 방식(<a href=\"https://policies.google.com/technologies/partner-sites?hl=ko\" target=\"_blank\" rel=\"noopener\">policies.google.com/technologies/partner-sites</a>)에서 볼 수 있습니다."
+      ]},
+      { h: "5. 유럽경제지역(EEA)·영국·스위스의 동의", p: [
+        "동의가 필요한 지역에서는 광고를 요청하기 전에 Google 동의 창을 보여 줍니다. 앱의 설정 > 개인정보 선택에서 언제든 선택을 바꿀 수 있습니다."
+      ]},
+      { h: "6. 사용자의 선택", li: [
+        "기기 설정에서 광고 ID를 재설정·삭제하거나 맞춤 광고를 끌 수 있습니다(예: 설정 > Google > 광고, 또는 설정 > 개인정보 보호 > 광고).",
+        "설정 > 개인정보 선택에서 동의를 바꿀 수 있습니다(동의가 필요한 지역에서 표시).",
+        "앱 저장공간을 지우거나 앱을 삭제하면 앱이 저장한 정보가 지워집니다."
+      ]},
+      { h: "7. 권한", p: [
+        "앱은 광고를 불러오기 위해 인터넷·네트워크 상태 권한을 사용하고, Google 모바일 광고 SDK에 포함된 광고 ID 권한을 사용합니다. 개인 콘텐츠에 접근하는 권한은 요청하지 않습니다."
+      ]},
+      { h: "8. 정보의 제공", p: [
+        "개인 정보를 판매·대여·공유하지 않습니다. 4항에서 설명한 경우에만 제3자가 정보를 처리합니다."
+      ]},
+      { h: "9. 아동", p: [
+        "앱은 일반적인 화학 참고서 앱으로, 13세 미만 아동을 특별히 대상으로 하지 않습니다. 아동의 개인 정보를 알면서 수집하지 않습니다. 아동이 개인 정보를 제공했다고 생각되면 {email}로 알려 주세요."
+      ]},
+      { h: "10. 보안", p: [
+        "앱이 저장하는 정보는 사용자의 기기에만 있습니다. 앱과 Google 광고 서비스 사이의 통신은 암호화된 연결(HTTPS)을 사용합니다."
+      ]},
+      { h: "11. 방침의 변경", p: [
+        "앱이 바뀌면 이 방침을 고칠 수 있습니다. 바뀐 방침은 새 시행일과 함께 이 페이지에 게시합니다."
+      ]},
+      { h: "12. 문의", p: [
+        "이 방침에 대한 질문이나 요청은 {email}로 보내 주세요."
+      ]}
+    ],
+    footer: "© {app}"
+  }
+};
 
-<p>수집된 정보는 맞춤형 광고 제공 및 광고 성과 분석에 사용됩니다.</p>
+(function () {
+  var DEFAULT = "en";
+  var codes = Object.keys(TEXT);
 
-<p>Google의 개인정보처리방침은 아래에서 확인할 수 있습니다:</p>
-<p>
-    <a href="https://policies.google.com/privacy" target="_blank">
-        https://policies.google.com/privacy
-    </a>
-</p>
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+  function fill(s, t) {
+    var mail = '<a href="mailto:' + esc(CONFIG.email) + '">' + esc(CONFIG.email) + "</a>";
+    return s.replace(/\{email\}/g, mail).replace(/\{date\}/g, esc(CONFIG.effectiveDate)).replace(/\{app\}/g, esc(t.app));
+  }
 
-<hr>
+  function render(code) {
+    var t = TEXT[code];
+    document.documentElement.lang = code;
+    document.title = t.title + " · " + t.app;
+    document.getElementById("app-name").textContent = t.app;
+    var html = "<h1>" + esc(t.title) + "</h1>";
+    html += '<p class="meta">' + fill(t.effective, t) + "</p>";
+    html += '<p class="contact">' + fill(t.contactLine, t) + "</p>";
+    t.sections.forEach(function (s) {
+      html += "<h2>" + esc(s.h) + "</h2>";
+      (s.p || []).forEach(function (p) { html += "<p>" + fill(p, t) + "</p>"; });
+      if (s.li) html += "<ul>" + s.li.map(function (li) { return "<li>" + fill(li, t) + "</li>"; }).join("") + "</ul>";
+      (s.after || []).forEach(function (p) { html += "<p>" + fill(p, t) + "</p>"; });
+    });
+    document.getElementById("content").innerHTML = html;
+    document.getElementById("footer").innerHTML = fill(t.footer, t);
+    document.querySelectorAll("#langs button").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.lang === code ? "true" : "false"); });
+  }
 
-<h2>3. 개인정보의 제3자 제공</h2>
-<p>본 앱은 직접적으로 개인정보를 제3자에게 제공하지 않습니다.</p>
-<p>다만, 광고 제공을 위해 광고 플랫폼에서 일부 데이터를 처리할 수 있습니다.</p>
+  // 언어 버튼: TEXT에 있는 언어로 만든다.
+  var langs = document.getElementById("langs");
+  codes.forEach(function (code) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.dataset.lang = code;
+    b.textContent = TEXT[code].languageName;
+    b.addEventListener("click", function () {
+      try { localStorage.setItem("cn-lang", code); } catch (e) {}
+      render(code);
+    });
+    langs.appendChild(b);
+  });
 
-<hr>
-
-<h2>4. 아동의 개인정보 보호</h2>
-<p>본 앱은 만 13세 미만 아동을 대상으로 개인정보를 수집하지 않습니다.</p>
-
-<hr>
-
-<h2>5. 이용자의 권리</h2>
-<p>사용자는 기기 설정에서 다음과 같은 방법으로 데이터 수집을 제한할 수 있습니다:</p>
-<ul>
-    <li>광고 ID 재설정</li>
-    <li>맞춤 광고 제한</li>
-</ul>
-
-<hr>
-
-<h2>6. 개인정보처리방침 변경</h2>
-<p>본 개인정보처리방침은 변경될 수 있으며, 변경 시 본 페이지를 통해 공지합니다.</p>
-
-<hr>
-
-<h2>7. 문의</h2>
-<p>앱과 관련한 문의는 아래 이메일로 연락해 주시기 바랍니다.</p>
-<p>이메일: jbgilion22@gmail.com</p>
-
-<hr>
-
-<p>시행일: 2026년 10월 14일</p>
-
+  // 1) 직접 고른 언어 2) 브라우저 언어 중 있는 것 3) 영어
+  function pick() {
+    var saved = null;
+    try { saved = localStorage.getItem("cn-lang"); } catch (e) {}
+    if (saved && TEXT[saved]) return saved;
+    var prefs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || DEFAULT];
+    for (var i = 0; i < prefs.length; i++) {
+      var base = String(prefs[i]).toLowerCase().split("-")[0];
+      if (TEXT[base]) return base;
+    }
+    return DEFAULT;
+  }
+  render(pick());
+})();
+</script>
 </body>
 </html>
